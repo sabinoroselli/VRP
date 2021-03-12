@@ -1,9 +1,9 @@
 from z3 import *
-from support_functions import make_graph, print_support, take_second, json_parser
+from funzioni_di_supporto import make_graph, print_support, take_second, json_parser
 from time import time as tm
 
 
-def modello(instance,method,depot_condition):
+def modello(instance,method):
 
     print('begin processing instance: ',instance,'method: ',method,)
 
@@ -165,25 +165,17 @@ def modello(instance,method,depot_condition):
 
     # THESE CONSTRAINTS ARE RELATED TO THE ROBOTS MOVEMENTS
     # take a look at the file 'conflict_free_no_edges.py' for comments on the constraints
-    if depot_condition == 'default':
-        initial_location = [
-            at[i][0][0] for i,_ in enumerate(vehicles)
-        ]
-    else:
-        initial_location = [
-            at[i_index][start_list['_'.join(i.split('_')[:-1])]][0] for i_index,i in enumerate(vehicles)
-        ]
+
+    initial_location = [
+        at[i_index][start_list['_'.join(i.split('_')[:-1])]][0] for i_index,i in enumerate(vehicles)
+    ]
 
     # ATRs are supposed to go back to their initial location after they are finished
     # this must be decreased by the same constant c as above
-    if depot_condition == 'default':
-        return_trip = [
-            at[i][0][len(time_horizon) - c] for i,_ in enumerate(vehicles)
-        ]
-    else:
-        return_trip = [
-            at[i_index][start_list['_'.join(i.split('_')[:-1])]][len(time_horizon) - c] for i_index, i in enumerate(vehicles)
-        ]
+
+    return_trip = [
+        at[i_index][start_list['_'.join(i.split('_')[:-1])]][len(time_horizon) - c] for i_index, i in enumerate(vehicles)
+    ]
 
     no_ubiquity = [
         PbLe([
@@ -361,7 +353,7 @@ def modello(instance,method,depot_condition):
 
     domain = [
         And(
-            rc[i][t] >= 0,
+            rc[i][t] > 0,
             rc[i][t] <= Autonomy
         )
         for i,_ in enumerate(vehicles)
@@ -497,7 +489,7 @@ def modello(instance,method,depot_condition):
             optimum = m[Z]
             print('travelling distance: ', optimum)
 
-            print(s.statistics())
+            # print(s.statistics())
 
             def elem(stringa):
                 return int(str(stringa).split('_')[4])
@@ -533,9 +525,11 @@ def modello(instance,method,depot_condition):
                         if m[assigned_to_task[i][j][k]] == True:
                             tasks.append(assigned_to_task[i][j][k])
 
-            for i,_ in enumerate(vehicles):
-                for j in nodes:
-                    for t in time_horizon:
+
+            for i, _ in enumerate(vehicles):
+                for t in time_horizon:
+                    for j in nodes:
+
                         if m[at[i][j][t]]  == True:
                             path.append(at[i][j][t])
             path = sorted(path, key=elem2)
@@ -581,24 +575,24 @@ def modello(instance,method,depot_condition):
     print('instance: ',instance)
     solving_time = round(tm() - start_solving,2)
     print('solving time: ', solving_time)
-    result = '{},{},{},{},{},{},{},{},{},{},{} \n'.format(
-                                                    method,
-                                                    feasibility,
-                                                    optimum,
-                                                    instance.split('_')[1][0] + instance.split('_')[1][1],
-                                                    instance.split('_')[1][2],
-                                                    instance.split('_')[1][3],
-                                                    instance.split('_')[2],
-                                                    instance.split('_')[3],
-                                                    instance.split('_')[4],
-                                                    generation_time,
-                                                    solving_time
-                                                    )
+    # result = '{},{},{},{},{},{},{},{},{},{},{} \n'.format(
+    #                                                 method,
+    #                                                 feasibility,
+    #                                                 optimum,
+    #                                                 instance.split('_')[1][0] + instance.split('_')[1][1],
+    #                                                 instance.split('_')[1][2],
+    #                                                 instance.split('_')[1][3],
+    #                                                 instance.split('_')[2],
+    #                                                 instance.split('_')[3],
+    #                                                 instance.split('_')[4],
+    #                                                 generation_time,
+    #                                                 solving_time
+    #                                                 )
+    #
+    # with open('data_storage.txt', 'a+') as write_file:
+    #     write_file.write(result)
 
-    with open('data_storage.txt', 'a+') as write_file:
-        write_file.write(result)
-
-    return [result]
+    return feasibility,optimum,generation_time,solving_time
 
 
 
