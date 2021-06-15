@@ -16,7 +16,7 @@ The folder "paths_containers" containes json files storing the shortest path fro
 
 The files paths_changer.py, routing_multi_depot_model.py, assignment_model.py, route_checker.py, and scheduling_model.py contain the Z3 code to model the sub-problems. They are called by ComSat to solve an instance of the CF-EVRP. 
 
-The file "routing_md_3index.py" contains an alternative formulation of the routing problem using 3 indexes for the decision variables instead of 2.
+The file "routing_md_3index.py" contains an alternative formulation of the routing problem using 3 indexes for the decision variables instead of 2. to use the 3-index formulation instead of the 2-index one the corresponding modules must be commented on (and off) in the file "ComSat.py".
 
 Finally, the file support_functions.py contains functions for parsing the instances, measure distance between nodes, and print data.
   
