@@ -6,9 +6,9 @@ from time import time as tm
 
 from routing_multi_depot_model import routing
 # from routing_md_3index import routing
-from assignment_model_2 import assignment
-from scheduling_model_2 import schedule
-from path_changer_2 import changer
+from assignment_model import assignment
+from scheduling_model import schedule
+from path_changer import changer
 from route_checker import routes_checking
 
 def Compositional(problem):
