@@ -1,4 +1,4 @@
-from mono_2 import modello
+from MonoMod import modello
 from Compo_algo import Compositional
 from support_functions import list_unknown,list_missing,data_analyzer,data_printer
 from multiprocessing import Pool,cpu_count
