@@ -1,0 +1,64 @@
+{
+  "test_data": {
+    "Big_number": 100,
+    "Autonomy": 10000,
+    "charging_coefficient": 9,
+    "nodes": 3,
+    "start_list": {
+      "A": 0,
+      "B": 1
+    },
+    "charging_stations": [
+      0,
+      1
+    ],
+    "hub_nodes": [
+      0,
+      1
+    ]
+  },
+  "ATRs": {
+      "A": {
+            "units": 1
+        },
+      "B": {
+            "units": 1
+        }
+  },
+  "jobs": {
+      "job_1": {
+              "tasks": {
+                  "1": {
+                      "location": 1,
+                      "precedence": [],
+                      "TW": [11,13],
+                      "Service": 5
+                  }
+              },
+              "ATR": [
+                  "A"
+              ]
+          },
+      "job_2": {
+              "tasks": {
+                  "1": {
+                      "location": 0,
+                      "precedence": [],
+                      "TW": [11,13],
+                      "Service": 6
+                  }
+              },
+              "ATR": [
+                  "B"
+              ]
+          }
+  },
+  "edges": {
+    "0,1": [10,1],
+    "0,2": [6,1],
+    "1,2": [6,1],
+    "1,0": [10,1],
+    "2,0": [6,1],
+    "2,1": [6,1]
+  }
+}
