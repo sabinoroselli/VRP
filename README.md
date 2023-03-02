@@ -18,7 +18,7 @@ The files paths_changer.py, assignment_model.py, route_checker.py, contain the Z
 Differences among "scheduling" version depend on whether they are supporting the generation of an Unsat Core to guide the paths search (_UC), or not (_basic). 
 Moreover, it is possible to solve an instance of the CF-EVRP by calling ComSat_Slim instead of ComSat. ComSat_Slim.py will call E_Routing_Gurobi.py, which contains the implementation of the E-Routing Problem; specific versions of the "route_checker" and "scheduling_model" (_slim) have been implemented to be called when using E_Routing_Gurobi.py instead of a "routing" model and assignment_model.py. 
 
-The files 
+The files Instances_Results.pdf, CASE_2021_Experiments.pdf, and Optimality_instances.pdf contain descriptions of specific problem instances from the forlder test_case, and the schedules ComSat computed for them.
 
 Finally, the file support_functions.py contains functions for parsing the instances, measure distance between nodes, and print data.
   
